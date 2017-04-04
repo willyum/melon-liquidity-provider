@@ -24,5 +24,7 @@ request('https://api.kraken.com/0/public/Ticker?pair=MLNETH', function (error, r
         console.log([sellMLN, mlnAdd, buyETH, ethAdd]);
         console.log(bid);
         console.log([sellETH, ethAdd, buyMLN, mlnAdd]);
+        contract.make(sellMLN, mlnAdd, buyETH, ethAdd);
+        contract.make(sellETH, ethAdd, buyMLN, mlnAdd);
     }
 });
