@@ -13,7 +13,7 @@ var liveAskIDs = [];
 var liveBidIDs = [];
 
 function batchCancel(list){
-    if list.length != 0 {
+    if (list.length != 0) {
         var results = _.map(list, contract.cancel);
         list = _.reject(list, function(orderId, index){return results[index]});
     }
@@ -41,10 +41,13 @@ request('https://api.kraken.com/0/public/Ticker?pair=MLNETH', function (error, r
         liveAskIDs = batchCancel(liveAskIDs);
         liveBidIDs = batchCancel(liveBidIDs);
 
-        contract.make(sellMLN, mlnAdd, buyETH, ethAdd);
-        // liveAskIDs.push(getLastOrderId());
+        console.log(liveAskIDs);
+        console.log(liveBidIDs);
         
-        contract.make(sellETH, ethAdd, buyMLN, mlnAdd);
-        // liveAskIDs.push(getLastOrderId());
+        // var askId = contract.make(sellMLN, mlnAdd, buyETH, ethAdd);
+        // liveAskIDs.push(askId);
+        
+        // var bidId = contract.make(sellETH, ethAdd, buyMLN, mlnAdd);
+        // liveBidIDs.push(bidId);
     }
 });
