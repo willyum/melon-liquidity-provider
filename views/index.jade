@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  table 
+  tr
+    th Price
+    th MLN
+    th ETH
+  tbody
+    td #{liveAsk[0]}
+    td #{liveAsk[2]}
+    td #{liveAsk[0]*liveAsk[2]}
