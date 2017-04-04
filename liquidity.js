@@ -9,6 +9,20 @@ var request = require('request');
 request('https://api.kraken.com/0/public/Ticker?pair=MLNETH', function (error, response, body) {
     if (!error && response.statusCode == 200) {
         var data = JSON.parse(body);
-        console.log(data['result']);
+        var ask = data['result']['XMLNXETH']['a'];
+        var bid = data['result']['XMLNXETH']['b'];
+
+        var sellMLN = web3.toWei(ask[1], 'ether');
+        var buyETH = web3.toWei(ask[0], 'ether')*ask[1];
+        var sellETH = web3.toWei(bid[0], 'ether')*bid[1];
+        var buyMLN = web3.toWei(bid[1], 'ether');
+
+        var ethAdd = '0x7506c7BfED179254265d443856eF9bda19221cD7';
+        var mlnAdd = '0x4DffEA52b0B4b48c71385ae25de41CE6AD0Dd5a7';
+
+        console.log(ask);
+        console.log([sellMLN, mlnAdd, buyETH, ethAdd]);
+        console.log(bid);
+        console.log([sellETH, ethAdd, buyMLN, mlnAdd]);
     }
 });
