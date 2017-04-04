@@ -4,6 +4,11 @@ const abiArray = [{"constant":false,"inputs":[{"name":"sell_how_much","type":"ui
 
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 var contract = web3.eth.contract(abiArray).at(contractAddress);
+var ethAdd = '0x7506c7BfED179254265d443856eF9bda19221cD7';
+var mlnAdd = '0x4DffEA52b0B4b48c71385ae25de41CE6AD0Dd5a7';
+
+var liveAskIDs = [];
+var liveBidIDs = [];
 
 var request = require('request');
 request('https://api.kraken.com/0/public/Ticker?pair=MLNETH', function (error, response, body) {
@@ -17,14 +22,15 @@ request('https://api.kraken.com/0/public/Ticker?pair=MLNETH', function (error, r
         var sellETH = web3.toWei(bid[0], 'ether')*bid[1];
         var buyMLN = web3.toWei(bid[1], 'ether');
 
-        var ethAdd = '0x7506c7BfED179254265d443856eF9bda19221cD7';
-        var mlnAdd = '0x4DffEA52b0B4b48c71385ae25de41CE6AD0Dd5a7';
-
         console.log(ask);
         console.log([sellMLN, mlnAdd, buyETH, ethAdd]);
         console.log(bid);
         console.log([sellETH, ethAdd, buyMLN, mlnAdd]);
+
         contract.make(sellMLN, mlnAdd, buyETH, ethAdd);
+        // liveAskIDs.push(contract.make(sellMLN, mlnAdd, buyETH, ethAdd));
+        
         contract.make(sellETH, ethAdd, buyMLN, mlnAdd);
+        // liveAskIDs.push(contract.make(sellETH, ethAdd, buyMLN, mlnAdd));
     }
 });
